@@ -40,11 +40,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == 0) {
             if (resultCode == 1) {
                 try {
-                    Contact c = (Contact)data.getParcelableExtra("CONT");
+                    Contact c = (Contact)data.getSerializableExtra("CONT");
                     contacts.add(c);
-                } catch (NullPointerException e) {
+                } catch (Exception e) {
                     Log.d(TAG, "onActivityResult: conatct null");
                 }
+
                 adapter.notifyDataSetChanged();
             }
         }
