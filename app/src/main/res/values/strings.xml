@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">sapi-adv</string>
+    <string name="list_of_contacts"/>
+    <string name="add"/>
+    <string name="name"/>
+    <string name="phone"/>
 </resources>
