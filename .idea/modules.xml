@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/AndroidSapiProjekt.iml" filepath="$PROJECT_DIR$/AndroidSapiProjekt.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/sapi-adv.iml" filepath="$PROJECT_DIR$/sapi-adv.iml" />
     </modules>
