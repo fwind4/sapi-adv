@@ -9,7 +9,7 @@ import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class Home_screen extends AppCompatActivity {
+public class HomeScreenActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListner;
@@ -33,7 +33,7 @@ public class Home_screen extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser()==null)
                 {
-                    startActivity(new Intent(Home_screen.this, Signin_activity.class));
+                    startActivity(new Intent(HomeScreenActivity.this, SigninActivity.class));
                 }
             }
         };

@@ -19,7 +19,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class Signup_activity extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity {
     private EditText name, email_id, passwordcheck;
     private FirebaseAuth mAuth;
     private static final String TAG = "";
@@ -37,7 +37,7 @@ public class Signup_activity extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Signup_activity.this, Signin_activity.class);
+                Intent intent = new Intent(SignupActivity.this, SigninActivity.class);
                 startActivity(intent);
             }
         });
@@ -68,7 +68,7 @@ public class Signup_activity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
 
                 mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(Signup_activity.this, new OnCompleteListener<AuthResult>() {
+                        .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
 
@@ -78,13 +78,13 @@ public class Signup_activity extends AppCompatActivity {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d(TAG, "createUserWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
-                                    Intent intent = new Intent(Signup_activity.this, Home_screen.class);
+                                    Intent intent = new Intent(SignupActivity.this, HomeScreenActivity.class);
                                     startActivity(intent);
                                     finish();
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                    Toast.makeText(Signup_activity.this, "Authentication failed.",
+                                    Toast.makeText(SignupActivity.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
 
                                 }

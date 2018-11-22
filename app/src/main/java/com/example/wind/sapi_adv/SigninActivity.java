@@ -27,12 +27,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class Signin_activity extends AppCompatActivity {
+public class SigninActivity extends AppCompatActivity {
 
     private static final String TAG = "";
     private EditText inputEmail, inputPassword;
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
+    private GoogleSignInClient gClient;
 
     SignInButton button;
     private final static int RC_SIGN_IN = 123;
@@ -55,7 +56,7 @@ public class Signin_activity extends AppCompatActivity {
 
         //check the current user
         if (mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(Signin_activity.this, Home_screen.class));
+            startActivity(new Intent(SigninActivity.this, HomeScreenActivity.class));
             finish();
         }
 
@@ -79,7 +80,7 @@ public class Signin_activity extends AppCompatActivity {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Signin_activity.this, Signup_activity.class));
+                startActivity(new Intent(SigninActivity.this, SignupActivity.class));
             }
         });
 
@@ -106,7 +107,7 @@ public class Signin_activity extends AppCompatActivity {
 
                 //authenticate user
                 mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(Signin_activity.this, new OnCompleteListener<AuthResult>() {
+                        .addOnCompleteListener(SigninActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
 
@@ -115,13 +116,13 @@ public class Signin_activity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     // there was an error
                                     Log.d(TAG, "signInWithEmail:success");
-                                    Intent intent = new Intent(Signin_activity.this, Home_screen.class);
+                                    Intent intent = new Intent(SigninActivity.this, HomeScreenActivity.class);
                                     startActivity(intent);
                                     finish();
 
                                 } else {
                                     Log.d(TAG, "singInWithEmail:Fail");
-                                    Toast.makeText(Signin_activity.this, getString(R.string.failed), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(SigninActivity.this, getString(R.string.failed), Toast.LENGTH_LONG).show();
                                 }
                             }
 
@@ -135,18 +136,23 @@ public class Signin_activity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null) {
-                    startActivity(new Intent(Signin_activity.this, Home_screen.class));
+                    startActivity(new Intent(SigninActivity.this, HomeScreenActivity.class));
                 }
 
             }
         };
 
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
 
+        gClient = GoogleSignIn.getClient(this, gso);
     }
 
 
     private void signIn() {
-        Intent signInIntent = GoogleSignInClient.getSignInIntent();
+        Intent signInIntent = gClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
@@ -184,7 +190,7 @@ public class Signin_activity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(Signin_activity.this, "Aut Fail", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SigninActivity.this, "Aut Fail", Toast.LENGTH_SHORT).show();
                             //updateUI(null);
                         }
 
