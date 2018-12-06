@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment android:name="com.example.wind.sapi_adv.HomeFragment"
+        android:id="@+id/home"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+    <fragment android:name="com.example.wind.sapi_adv.SigninFragment"
+        android:id="@+id/signin"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+    <fragment android:name="com.example.wind.sapi_adv.SignupFragment"
+        android:id="@+id/signup"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+
+</android.support.constraint.RelativeLayout>

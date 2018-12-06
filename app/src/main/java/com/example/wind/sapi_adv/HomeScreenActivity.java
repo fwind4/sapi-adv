@@ -11,42 +11,20 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeScreenActivity extends AppCompatActivity {
 
-    FirebaseAuth mAuth;
-    FirebaseAuth.AuthStateListener mAuthListner;
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListner);
-    }
+    private HomeFragment home;
+    private SignupFragment signup;
+    private SigninFragment signin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.homepage);
+        setContentView(R.layout.home_activity);
 
-        Button button = (Button) findViewById(R.id.signout);
-        mAuth = FirebaseAuth.getInstance();
+        home = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.home);
+        signup = (SignupFragment) getSupportFragmentManager().findFragmentById(R.id.signup);
+        signin = (SigninFragment) getSupportFragmentManager().findFragmentById(R.id.signin);
 
-        mAuthListner = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseAuth.getCurrentUser()==null)
-                {
-                    startActivity(new Intent(HomeScreenActivity.this, SigninActivity.class));
-                }
-            }
-        };
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAuth.signOut();
-
-
-            }
-        });
-
+        setContentView(R.layout.home);
 
     }
 }
