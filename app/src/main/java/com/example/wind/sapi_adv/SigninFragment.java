@@ -58,7 +58,7 @@ public class SigninFragment extends Fragment {
 
         //check the current user
         if (mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getActivity(), HomeFragment.class));
+            startActivity(new Intent(getActivity(), ListingFragment.class));
             getActivity().finish();
         }
 
