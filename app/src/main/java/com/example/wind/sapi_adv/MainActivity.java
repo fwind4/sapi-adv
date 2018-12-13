@@ -19,11 +19,11 @@ public class MainActivity extends AppCompatActivity {
         listing = (ListingFragment) getSupportFragmentManager().findFragmentById(R.id.list);
         dataInput = (DataInputFragment) getSupportFragmentManager().findFragmentById(R.id.data_input);
         details = (DetailsFragment) getSupportFragmentManager().findFragmentById(R.id.details);
-        home = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.home);
+        home = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.home_frag);
         signup = (SignupFragment) getSupportFragmentManager().findFragmentById(R.id.signup);
         signin = (SigninFragment) getSupportFragmentManager().findFragmentById(R.id.signin);
 
-        setContentView(R.layout.home);
+        setContentView(R.layout.listing);
 
     }
 }

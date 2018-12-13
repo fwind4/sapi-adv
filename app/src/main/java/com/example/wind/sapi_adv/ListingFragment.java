@@ -13,7 +13,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListingFragment extends Fragment implements View.OnClickListener {
+public class ListingFragment extends Fragment {
 
     private List<Contact> contacts = new ArrayList<>();
     private ContactAdapter adapter;
@@ -24,7 +24,13 @@ public class ListingFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                             Bundle savedInstanceState) {
         addBut = getActivity().findViewById(R.id.bt_add);
-        addBut.setOnClickListener(this);
+        addBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), DataInputFragment.class);
+                startActivityForResult(intent, 0);
+            }
+        });
 
         ListView lvContacts = (ListView) getActivity().findViewById(R.id.lv_contacts);
         adapter = new ContactAdapter(getActivity(), contacts);
@@ -33,11 +39,6 @@ public class ListingFragment extends Fragment implements View.OnClickListener {
         return inflater.inflate(R.layout.listing, container, false);
     }
 
-    @Override
-    public void onClick(View v) {
-        Intent intent = new Intent(getActivity(), DataInputFragment.class);
-        startActivityForResult(intent, 0);
-    }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 0) {
