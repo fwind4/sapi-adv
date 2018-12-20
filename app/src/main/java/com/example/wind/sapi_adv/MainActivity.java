@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         dataInput = (DataInputFragment) getSupportFragmentManager().findFragmentById(R.id.data_input);
         details = (DetailsFragment) getSupportFragmentManager().findFragmentById(R.id.details);
 
-        //setContentView(R.layout.listing);
+        setContentView(R.layout.home);
 
     }
 
