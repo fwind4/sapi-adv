@@ -17,8 +17,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SigninFragment"></activity>
-        <activity android:name=".SignupFragment"></activity>
     </application>
 
 </manifest>
