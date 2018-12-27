@@ -1,29 +1,32 @@
+
+
 package com.example.wind.sapi_adv;
 
-import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG_DIALOG_FRAGMENT = "tagDialogFragment";
 
-    private ListingFragment listing;
-    private DataInputFragment dataInput;
-    private DetailsFragment details;
-    private HomeFragment home;
-    private SignupFragment signup;
-    private SigninFragment signin;
+    protected void showProgressDialog(String message) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getExistingDialogFragment();
+        if (prev == null) {
+            ProgressDialogFragment fragment = ProgressDialogFragment.newInstance(message);
+            fragment.show(ft, TAG_DIALOG_FRAGMENT);
+        }
+    }
 
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected void dismissProgressDialog() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getExistingDialogFragment();
+        if (prev != null) {
+            ft.remove(prev).commit();
+        }
+    }
 
-        listing = (ListingFragment) getSupportFragmentManager().findFragmentById(R.id.list);
-        dataInput = (DataInputFragment) getSupportFragmentManager().findFragmentById(R.id.data_input);
-        details = (DetailsFragment) getSupportFragmentManager().findFragmentById(R.id.details);
-        home = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.home_frag);
-        signup = (SignupFragment) getSupportFragmentManager().findFragmentById(R.id.signup);
-        signin = (SigninFragment) getSupportFragmentManager().findFragmentById(R.id.signin);
-
-        setContentView(R.layout.listing);
-
+    private Fragment getExistingDialogFragment() {
+        return getSupportFragmentManager().findFragmentByTag(TAG_DIALOG_FRAGMENT);
     }
 }
