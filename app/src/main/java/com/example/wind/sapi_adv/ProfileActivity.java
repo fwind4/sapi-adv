@@ -151,7 +151,7 @@ public class ProfileActivity extends MainActivity implements
         mProfileUsername.setVisibility(View.VISIBLE);
         mProfilePhoto.setVisibility(View.VISIBLE);
         if (firebaseUser.getDisplayName() != null) {
-            mProfileUsername.setText(firebaseUser.getDisplayName());
+            mProfileUsername.setText(firebaseUser.getEmail());
         }
 
         if (firebaseUser.getPhotoUrl() != null) {
