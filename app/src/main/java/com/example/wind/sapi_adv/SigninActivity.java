@@ -3,12 +3,10 @@ package com.example.wind.sapi_adv;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -29,20 +27,19 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class SigninFragment extends Fragment {
+public class SigninActivity extends AppCompatActivity {
 
     private static final String TAG = "";
     private EditText inputEmail, inputPassword;
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
-    private GoogleSignInClient gClient;
 
     SignInButton button;
     private final static int RC_SIGN_IN = 123;
     FirebaseAuth.AuthStateListener mAuthListner;
 
     @Override
-    public void onStart() {
+    protected void onStart() {
 
         super.onStart();
 
@@ -51,36 +48,30 @@ public class SigninFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         mAuth = FirebaseAuth.getInstance();
 
         //check the current user
         if (mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getActivity(), ListingFragment.class));
-            getActivity().finish();
+            startActivity(new Intent(SigninActivity.this, ProfileActivity.class));
+            finish();
         }
 
-        inputEmail = (EditText) getActivity().findViewById(R.id.email);
-        inputPassword = (EditText) getActivity().findViewById(R.id.password);
-        Button ahlogin = (Button) getActivity().findViewById(R.id.ah_login);
-        progressBar = (ProgressBar) getActivity().findViewById(R.id.progressBar);
-        TextView btnSignIn = (TextView) getActivity().findViewById(R.id.sign_in_button);
-        button = (SignInButton) getActivity().findViewById(R.id.sign_in_google);
+        setContentView(R.layout.activity_signin);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn();
-            }
-        });
+        inputEmail = (EditText) findViewById(R.id.email);
+        inputPassword = (EditText) findViewById(R.id.password);
+        Button ahlogin = (Button) findViewById(R.id.ah_login);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        TextView btnSignIn = (TextView) findViewById(R.id.sign_in_button);
 
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), SignupFragment.class));
+                startActivity(new Intent(SigninActivity.this, SignupActivity.class));
             }
         });
 
@@ -94,11 +85,11 @@ public class SigninFragment extends Fragment {
                 String email = inputEmail.getText().toString();
                 final String password = inputPassword.getText().toString();
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Please enter email id", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Please enter email id", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Enter Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Enter Password", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -107,7 +98,7 @@ public class SigninFragment extends Fragment {
 
                 //authenticate user
                 mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                        .addOnCompleteListener(SigninActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
 
@@ -116,13 +107,13 @@ public class SigninFragment extends Fragment {
                                 if (task.isSuccessful()) {
                                     // there was an error
                                     Log.d(TAG, "signInWithEmail:success");
-                                    Intent intent = new Intent(getActivity(), HomeFragment.class);
+                                    Intent intent = new Intent(SigninActivity.this, ProfileActivity.class);
                                     startActivity(intent);
-                                    getActivity().finish();
+                                    finish();
 
                                 } else {
                                     Log.d(TAG, "singInWithEmail:Fail");
-                                    Toast.makeText(getContext(), getString(R.string.failed), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(SigninActivity.this, getString(R.string.error_user_not_signed_in), Toast.LENGTH_LONG).show();
                                 }
                             }
 
@@ -136,7 +127,7 @@ public class SigninFragment extends Fragment {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null) {
-                    startActivity(new Intent(getActivity(), HomeFragment.class));
+                    startActivity(new Intent(SigninActivity.this, ProfileActivity.class));
                 }
 
             }
@@ -146,16 +137,6 @@ public class SigninFragment extends Fragment {
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-
-        gClient = GoogleSignIn.getClient(getActivity(), gso);
-
-        return inflater.inflate(R.layout.signin, container, false);
-    }
-
-
-    private void signIn() {
-        Intent signInIntent = gClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     @Override
@@ -181,7 +162,7 @@ public class SigninFragment extends Fragment {
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -192,7 +173,7 @@ public class SigninFragment extends Fragment {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(getContext(), "Aut Fail", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SigninActivity.this, "Aut Fail", Toast.LENGTH_SHORT).show();
                             //updateUI(null);
                         }
 
