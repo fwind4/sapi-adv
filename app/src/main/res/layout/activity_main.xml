@@ -1,0 +1,31 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment android:name="com.example.wind.sapi_adv.ListingFragment"
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <fragment android:name="com.example.wind.sapi_adv.DataInputFragment"
+        android:id="@+id/data-input"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <fragment android:name="com.example.wind.sapi_adv.DetailsFragment"
+        android:id="@+id/details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <fragment android:name="com.example.wind.sapi_adv.HomeFragment"
+        android:id="@+id/home_frag"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <fragment android:name="com.example.wind.sapi_adv.SigninFragment"
+        android:id="@+id/signin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <fragment android:name="com.example.wind.sapi_adv.SignupFragment"
+        android:id="@+id/signup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>
