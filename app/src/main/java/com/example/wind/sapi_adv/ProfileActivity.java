@@ -158,7 +158,7 @@ public class ProfileActivity extends MainActivity implements
             GlideUtil.loadProfileIcon(firebaseUser.getPhotoUrl().toString(), mProfilePhoto);
         }
         Map<String, Object> updateValues = new HashMap<>();
-        updateValues.put("displayName", firebaseUser.getEmail() != null ? firebaseUser.getEmail() : "Anonymous");
+        updateValues.put("displayName", firebaseUser.getDisplayName() != null ? firebaseUser.getDisplayName() : "Anonymous");
         updateValues.put("photoUrl", firebaseUser.getPhotoUrl() != null ? firebaseUser.getPhotoUrl().toString() : null);
 
         FirebaseUtil.getPeopleRef().child(firebaseUser.getUid()).updateChildren(
